@@ -201,7 +201,9 @@ func TestConfigurationErrors(t *testing.T) {
 
 		invalidInterval := "!!!invalid interval!!!"
 		items["cloudflare"] = &ReverseProxy{
-			DynamicCIDRs: []*DynamicCIDR{},
+			DynamicCIDRs: []*DynamicCIDR{
+				{Url: "https://google.com", RawInterval: invalidInterval},
+			},
 		}
 
 		cfg = &Config{Map: items}
