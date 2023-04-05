@@ -1,14 +1,11 @@
 # ReverseGuard. The Traefik plugin.
-___
 ## Description
-___
 The plugin comes as middleware and allows you to accept incoming requests only from trusted subnets. Subnets can be static or dynamic, placed in files or accessible by URL, with the ability to update at a specified interval.
 If the request was made from a trusted subnet, header rules can be applied to it. Also, in order not to disclose the presence of the web server, you can set a 404 code instead of a 403 code, which will be sent if the incoming IP address is not trusted.
 
 __This plugin is in testing mode, but can already be used in a production environment. Therefore, use it with caution. Report all bugs to Issues.__
 
 ## Configuration
-___
 ### Example
 The plugin comes as middleware, and can be configured as shown below:
 
@@ -95,9 +92,7 @@ map:
 ```
 
 ## Author
-___
 PMC Wagner. M-333C badge.
 
 ## License
-___
 See the LICENSE file.
