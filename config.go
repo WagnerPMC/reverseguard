@@ -129,10 +129,6 @@ func (d *DynamicCIDR) isHttpUrl() bool {
 	return strings.HasPrefix(d.Url, "http://") || strings.HasPrefix(d.Url, "https://")
 }
 
-func (d *DynamicCIDR) isValidUrl() bool {
-	return d.isFileUrl() || d.isHttpUrl()
-}
-
 func (d *DynamicCIDR) hasCIDR(cidr string) bool {
 	if !strings.Contains(cidr, "/") {
 		cidr += "/32"
