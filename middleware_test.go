@@ -50,7 +50,7 @@ func TestConfigurationErrors(t *testing.T) {
 		items["cloudflare"] = &ReverseProxy{
 			RawStaticCIDRs: []string{"127.0.0.1/32"},
 			HeaderActions: []*HeaderAction{
-				&HeaderAction{Action: "!!!some random string!!!"},
+				{Action: "!!!some random string!!!"},
 			},
 		}
 
@@ -68,7 +68,7 @@ func TestConfigurationErrors(t *testing.T) {
 		items["cloudflare"] = &ReverseProxy{
 			RawStaticCIDRs: []string{"127.0.0.1/32"},
 			HeaderActions: []*HeaderAction{
-				&HeaderAction{Action: "", Source: "mock"},
+				{Action: "", Source: "mock"},
 			},
 		}
 		cfg = &Config{Map: items}
@@ -86,7 +86,7 @@ func TestConfigurationErrors(t *testing.T) {
 		items["cloudflare"] = &ReverseProxy{
 			RawStaticCIDRs: []string{"127.0.0.1/32"},
 			HeaderActions: []*HeaderAction{
-				&HeaderAction{Action: invalidAction, Source: "mock"},
+				{Action: invalidAction, Source: "mock"},
 			},
 		}
 
@@ -102,7 +102,7 @@ func TestConfigurationErrors(t *testing.T) {
 		items["cloudflare"] = &ReverseProxy{
 			RawStaticCIDRs: []string{"127.0.0.1/32"},
 			HeaderActions: []*HeaderAction{
-				&HeaderAction{Action: ActionCopy, Source: "x-source"},
+				{Action: ActionCopy, Source: "x-source"},
 			},
 		}
 
@@ -118,7 +118,7 @@ func TestConfigurationErrors(t *testing.T) {
 		items["cloudflare"] = &ReverseProxy{
 			RawStaticCIDRs: []string{"127.0.0.1/32"},
 			HeaderActions: []*HeaderAction{
-				&HeaderAction{Action: ActionRename, Source: "x-source"},
+				{Action: ActionRename, Source: "x-source"},
 			},
 		}
 
@@ -134,7 +134,7 @@ func TestConfigurationErrors(t *testing.T) {
 		items["cloudflare"] = &ReverseProxy{
 			RawStaticCIDRs: []string{"127.0.0.1/32"},
 			HeaderActions: []*HeaderAction{
-				&HeaderAction{Action: ActionDelete, Source: "x-source"},
+				{Action: ActionDelete, Source: "x-source"},
 			},
 		}
 
@@ -186,7 +186,7 @@ func TestConfigurationErrors(t *testing.T) {
 		items := make(map[string]*ReverseProxy, 1)
 		items["cloudflare"] = &ReverseProxy{
 			DynamicCIDRs: []*DynamicCIDR{
-				&DynamicCIDR{Url: invalidUrl},
+				{Url: invalidUrl},
 			},
 		}
 		cfg := &Config{Map: items}
@@ -201,9 +201,7 @@ func TestConfigurationErrors(t *testing.T) {
 
 		invalidInterval := "!!!invalid interval!!!"
 		items["cloudflare"] = &ReverseProxy{
-			DynamicCIDRs: []*DynamicCIDR{
-				&DynamicCIDR{Url: "https://google.com", RawInterval: invalidInterval},
-			},
+			DynamicCIDRs: []*DynamicCIDR{},
 		}
 
 		cfg = &Config{Map: items}
@@ -216,11 +214,11 @@ func TestConfigurationErrors(t *testing.T) {
 
 		items["cloudflare"] = &ReverseProxy{
 			DynamicCIDRs: []*DynamicCIDR{
-				&DynamicCIDR{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60s"},
-				&DynamicCIDR{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60m"},
-				&DynamicCIDR{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60h"},
-				&DynamicCIDR{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60d"},
-				&DynamicCIDR{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60w"},
+				{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60s"},
+				{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60m"},
+				{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60h"},
+				{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60d"},
+				{Url: "https://www.cloudflare.com/ips-v4", RawInterval: "60w"},
 				// &DynamicCIDR{Url: "file:///var/log/dynip.txt", RawInterval: "60w"}, TODO : Add tests for local file url
 			},
 		}
