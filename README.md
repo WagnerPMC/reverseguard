@@ -1,3 +1,5 @@
+[![rg-tests](https://github.com/WagnerPMC/reverseguard/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/WagnerPMC/reverseguard/actions/workflows/tests.yml)
+
 # ReverseGuard. The Traefik plugin.
 ## Description
 The plugin comes as middleware and allows you to accept incoming requests only from trusted subnets. Subnets can be static or dynamic, placed in files or accessible by URL, with the ability to update at a specified interval.
