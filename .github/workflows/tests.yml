@@ -1,0 +1,60 @@
+name: rg-tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  golangci-lint:
+    name: Golang-CI (lint)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3 # action page: <https://github.com/actions/checkout>
+
+      - name: Set up Go
+        uses: actions/setup-go@v4 # action page: <https://github.com/actions/setup-go>
+        with:
+          go-version: stable
+
+      - name: Run linter
+        uses: golangci/golangci-lint-action@v3.4.0 # action page: <https://github.com/golangci/golangci-lint-action>
+        with:
+          version: v1.52 # without patch version
+          only-new-issues: false # show only new issues if it's a pull request
+          args: -v --build-tags=race --timeout=5m
+
+  go-test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: stable
+
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2 # Fixes codecov error 'Issue detecting commit SHA'
+
+      - name: Init Go modules Cache # Docs: <https://git.io/JfAKn#go---modules>
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-go-
+
+      - name: Install Go dependencies
+        run: go mod download
+
+      - name: Run Unit tests
+        run: go test -race -covermode=atomic -coverprofile /tmp/coverage.txt ./...
+
+      - name: Upload Coverage report to CodeCov
+        continue-on-error: true
+        uses: codecov/codecov-action@v3.1.1 # https://github.com/codecov/codecov-action
+        with:
+          file: /tmp/coverage.txt

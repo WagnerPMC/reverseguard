@@ -1,0 +1,19 @@
+displayName: ReverseGuard
+
+type: middleware
+
+import: github.com/WagnerPMC/reverseguard
+
+summary: >-
+  Blocks requests from untrusted sources.
+  There is support for dynamic sources (remote or local file) with updating by interval.
+  If the source is trusted, allows you to apply header operations: delete, copy, rename.
+
+testData:
+  map:
+    - cloudflare:
+      dynamic_cidrs:
+        - url: https://www.cloudflare.com/ips-v4
+          interval: 5m
+        - url: https://www.cloudflare.com/ips-v6
+          interval: 5m
