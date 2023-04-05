@@ -10,10 +10,33 @@ summary: >-
   If the source is trusted, allows you to apply header operations: delete, copy, rename.
 
 testData:
+  rewrite_403:
+    code: 404
+    content: "404 page not found"
   map:
-    - cloudflare:
+    cloudflare:
       dynamic_cidrs:
-        - url: https://www.cloudflare.com/ips-v4
-          interval: 5m
-        - url: https://www.cloudflare.com/ips-v6
-          interval: 5m
+        - url: "https://www.cloudflare.com/ips-v4"
+          interval: "5m"
+        - url: "https://www.cloudflare.com/ips-v6"
+          interval: "5m"
+      header_actions:
+        - action: copy
+          source: cf-connecting-ip
+          target: x-real-ip
+        - action: rename
+          source: cf-ipcountry
+          target: x-real-country
+        - action: delete
+          source: cf-connecting-ip
+
+    stormwall:
+      static_cidrs:
+        - 193.84.78.0/24
+        - 185.121.240.0/22
+        - 188.0.150.0/24
+        - 103.134.155.0/24
+      header_actions:
+        - action: copy
+          source: x-forwarded-for
+          target: x-real-ip
