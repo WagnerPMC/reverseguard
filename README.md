@@ -1,3 +1,7 @@
+<p align="center">
+<img src="docs/content/logo.png" alt="ReverseGuard" title="ReverseGuard" />
+</p>
+
 [![rg-tests](https://github.com/WagnerPMC/reverseguard/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/WagnerPMC/reverseguard/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/WagnerPMC/reverseguard/branch/master/graph/badge.svg?token=PMRQ7IWV9B)](https://codecov.io/gh/WagnerPMC/reverseguard)
 [![report](https://goreportcard.com/badge/github.com/WagnerPMC/reverseguard)](https://goreportcard.com/report/github.com/WagnerPMC/reverseguard)
