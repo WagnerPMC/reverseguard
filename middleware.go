@@ -24,11 +24,9 @@ type ReverseGuard struct {
 	config *Config
 }
 
-func (r *ReverseGuard) lookupTrustedSet(ip string) *ReverseProxy {
-	netIp := net.ParseIP(ip)
-
+func (r *ReverseGuard) lookupTrustedIp(ip net.IP) *ReverseProxy {
 	for _, proxy := range r.config.Map {
-		if proxy.contains(netIp) {
+		if proxy.contains(ip) {
 			return proxy
 		}
 	}
@@ -188,7 +186,9 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (r *ReverseGuard) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	reverse := r.lookupTrustedSet(req.RemoteAddr[:strings.Index(req.RemoteAddr, "/")])
+	ipParts := strings.SplitN(req.RemoteAddr, ":", 2)
+
+	reverse := r.lookupTrustedIp(net.ParseIP(ipParts[0]))
 
 	if reverse == nil {
 		if r.config.Custom403Response.code != 0 {
